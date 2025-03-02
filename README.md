@@ -3,50 +3,41 @@
 [![Visual Studio Community 2022](https://img.shields.io/badge/Visual%20Studio%20Community%202022-5C2D91?style=for-the-badge&logo=visual-studio&logoColor=white)](https://visualstudio.microsoft.com/es/vs/community/) [![C# .NET](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)](https://docs.microsoft.com/en-us/dotnet/csharp/) [![.NET nanoframework](https://img.shields.io/badge/.NET%20nanoframework-512BD4?style=for-the-badge&logo=.net&logoColor=white)](https://github.com/nanoframework)[![ESP32](https://img.shields.io/badge/ESP32-E7352C?style=for-the-badge&logo=espressif&logoColor=white)](https://www.espressif.com/en/products/socs/esp32)
 
 # Indice
-
-- [nanoframework](#net-nanoframework)
 - [Firmware](#firmware)
-    - [Instalación de nanoff](#instalación-de-nanoff)
-    - [Actualización del firmware](#actualización-del-firmware)
-    - [Configuración en VSCode](#configuración-en-vscode)
 - [Conceptos](#conceptos)
-    - [Velocidad](#velocidad)
-    - [Instancia Funciones Nanoff](#instancia-funciones-nanoff)
-        - [int](#int)
-        - [float](#float)
-        - [double](#double)
-        - [char](#char)
-        - [string](#string)
-        - [bool](#bool)
-        - [byte](#byte)
-        - [array](#array)
-- [Sistemas embebidos](#sistemas-embebidos)
+    - [Su Velocidad](#su-velocidad)
+- [Instancia Funciones Nanoff](#instancia-funciones-nanoff)
     - [Debug](#debug)
         - [WriteLine](#writeline)
     - [Thread](#thread)
         - [Sleep](#sleep)
+    - [Try](#try)
+    - [Hilos](#hilos)
+- [GPio](#gpio)
     - [IO Ports](#io-ports)
-        - [Gpio](#gpio)
-        - [ADC](#adc)
-        - [DAC](#dac)
-        - [PWM](#pwm)
-        - [UART](#uart)
+        - [Digital](#digital)
+        - [Análogo](#análogo)
         - [I2C](#i2c)
         - [SPI](#spi)
-- [Proyecto](#Desarrollo)
+        - [UART](#uart)
+- [LVGL](#lvgl)
+- [Entregable](#entregable)
+- [Desarrollo](#desarrollo)
+    - [Placa](#placa)
+    - [Código](#código)
+        - [Conexión](#conexión)
+        - [Datos](#datos)
 
 ## .NET nanoframework
 
 Todo lo que sigue viene de **[.NET nanoframework](https://github.com/nanoframework)**.
 
-<details>
-<summary> Firmware </summary>
-
-# Firmware
+### Firmware
 Para descargar e implementar nanoframework en el sistema embebido que deseamos, se debe primero instalar [vscode](https://code.visualstudio.com/) o [vscode community](https://visualstudio.microsoft.com/es/vs/community/).
 
 Se requiere descargar estos IDE y en sus extensiones descargar .NET nanoframework.
-
+<details>
+<summary>step to step</summary>
 Ahora, se requiere nanoff y se puede seguir el paso a paso en [nanoff](https://github.com/nanoframework/nanoFirmwareFlasher). Ahora en el terminal como admin.
 Primero se instala .NET o dotnet y si ya esta instalado verificar con:
 
@@ -92,20 +83,14 @@ Con ello ya hecho, se utiliza en esto [vscode_com](https://visualstudio.microsof
 5. Verificar versión mscorlib con el de nuget de referencias
 
 Por último se cargan los programas y se ven en salida/depurar.
-
 </details>
 
-<details>
-<summary> Conceptos </summary>
+### Conceptos
 
-## Conceptos
-
-<details>
-<summary> Velocidad </summary>
-
-### SU VELOCIDAD
+#### SU VELOCIDAD
 Para el sistema de lenguaje interpretado la velocidad de respuesta es algo clave, pues siendo un sistema tan pesado, al ejecutarse el sistema se demora muchísimo en responder a sistemas o funciones que en programación serian muy efectivas y rápidas, pero acá pueden demorar muchísimo para lo que es mejor usar librerías del mismo nanoframework.
-
+<details>
+<summary>ejemplo</summary>
 El siguiente código es una representación de un bucle anidado. El sistema se demoro cerca de 200 ms.
 
 ```csharp
@@ -179,214 +164,25 @@ namespace NFApp1
 ```
 </details>
 
-<details>
-<summary> Instancia Funciones Nanoff </summary>
-
 ### INSTANCIA FUNCIONES NANOFF
 Para el nanoff es importante aclarar como se instancia o se generan variables y unidades de memoria como atributos y funciones de la misma.
 
-<details>
-<summary> int </summary>
 
-#### int
-Utilizado para representar números enteros.
-Ejemplo de declaración:
-
-```csharp
-int entero = 10;
-```
-- **Vector de enteros**: Un array unidimensional de enteros.
-
-```csharp
-int[] vectorEnteros = new int[10];
-```
-- **Matriz de enteros**: Un array bidimensional de enteros.
-
-```csharp
-int[,] matrizEnteros = new int[3, 3];
-```
-</details>
-<details>
-<summary> float </summary>
-
-#### float
-Utilizado para representar números de punto flotante de precisión simple.
-Ejemplo de declaración:
-
-```csharp
-float flotante = 10.5f;
-```
-- **Vector de floats**: Un array unidimensional de floats.
-
-```csharp
-float[] vectorFloats = new float[10];
-```
-- **Matriz de floats**: Un array bidimensional de floats.
-
-```csharp
-float[,] matrizFloats = new float[3, 3];
-```
-</details>
-<details>
-<summary> double </summary>
-
-#### double
-Utilizado para representar números de punto flotante de doble precisión.
-Ejemplo de declaración:
-
-```csharp
-double doble = 20.5;
-```
-- **Vector de doubles**: Un array unidimensional de doubles.
-
-```csharp
-double[] vectorDoubles = new double[10];
-```
-- **Matriz de doubles**: Un array bidimensional de doubles.
-
-```csharp
-double[,] matrizDoubles = new double[3, 3];
-```
-</details>
-<details>
-<summary> char </summary>
-
-#### char
-Utilizado para representar un solo carácter.
-Ejemplo de declaración:
-
-```csharp
-char caracter = 'A';
-```
-- **Vector de chars**: Un array unidimensional de chars.
-
-```csharp
-char[] vectorChars = new char[10];
-```
-- **Matriz de chars**: Un array bidimensional de chars.
-
-```csharp
-char[,] matrizChars = new char[3, 3];
-```
-</details>
-<details>
-<summary> string </summary>
-
-#### string
-Utilizado para representar una secuencia de caracteres.
-Ejemplo de declaración:
-
-```csharp
-string cadena = "Hola, nanoframework";
-```
-- **Vector de strings**: Un array unidimensional de strings.
-
-```csharp
-string[] vectorStrings = new string[10];
-```
-- **Matriz de strings**: Un array bidimensional de strings.
-
-```csharp
-string[,] matrizStrings = new string[3, 3];
-```
-</details>
-<details>
-<summary> bool </summary>
-
-#### bool
-Utilizado para representar valores booleanos (true o false).
-Ejemplo de declaración:
-
-```csharp
-bool booleano = true;
-```
-- **Vector de bools**: Un array unidimensional de bools.
-
-```csharp
-bool[] vectorBools = new bool[10];
-```
-- **Matriz de bools**: Un array bidimensional de bools.
-
-```csharp
-bool[,] matrizBools = new bool[3, 3];
-```
-</details>
-<details>
-<summary> byte </summary>
-
-#### byte
-Utilizado para representar un byte (8 bits).
-Ejemplo de declaración:
-
-```csharp
-byte byteVariable = 0xFF;
-```
-- **Vector de bytes**: Un array unidimensional de bytes.
-
-```csharp
-byte[] vectorBytes = new byte[10];
-```
-- **Matriz de bytes**: Un array bidimensional de bytes.
-
-```csharp
-byte[,] matrizBytes = new byte[3, 3];
-```
-</details>
-<details>
-<summary> array </summary>
-
-#### array
-Utilizado para representar una colección de elementos del mismo tipo.
-
-Ejemplo de declaración:
-
-```csharp
-int[] arreglo = new int[10];
-```
-- **Vector de arrays**: Un array unidimensional de arrays.
-
-```csharp
-int[][] vectorArrays = new int[10][];
-```
-- **Matriz de arrays**: Un array bidimensional de arrays.
-
-```csharp
-int[,][] matrizArrays = new int[3, 3][];
-```
-</details>
-</details>
-</details>
-
-
-<details>
-<summary> Sistemas embebidos </summary>
-<details>
-<summary> Debug.xxxx </summary>
-
-### Debug
+#### Debug
 Función que permite usar la consola del mismo dispositivo embebido que tiene diversos metodos que permite usar diferentes funcionalidades del sistema.
 
-<details>
-<summary> WriteLine </seummary>
-
-#### WriteLine
+##### WriteLine
 Permite escribir lo que se necesita en la salida del depuración del sistema.
 
 ```csharp
 Debug.WriteLine("Mensaje de depuración");
 ```
-</details>
-</details>
 
-<details>
-<summary> Thread.xxxx </summary>
-
-### Thread
+#### Thread
 Thread es una clase que proporciona un conjunto de métodos y propiedades para trabajar con subprocesos. Permite la creación, control y administración de subprocesos en una aplicación.
-<details>
-<summary> Sleep </summary>
+Crear hilos independientes como las tareas.
 
-#### Sleep
+##### Sleep
 El método `Sleep` detiene la ejecución del subproceso actual durante un período de tiempo especificado.
 Ejemplo de uso:
 
@@ -394,212 +190,397 @@ Ejemplo de uso:
 Thread.Sleep(1000); // Detiene el subproceso durante 1000 milisegundos (1 segundo)
 ```
 Este método es útil para pausar la ejecución de un subproceso sin bloquear otros subprocesos en la aplicación.
-</details>
+
+#### try
+Forma de evitar y controlar los errores, pero con la funcionalidad de evitarlos y continuar con el proceso.
+
+```csharp
+try
+{
+    int x = 0;
+    int y = 5;
+    int z = y / x;
+}
+catch (IndexOutOfRangeException e)
+{
+    Debug.WriteLine("Error por índice fuera de rango, " + e.ToString());
+}
+catch (Exception e)
+{
+    Debug.WriteLine("Error, Información = " + e.ToString());
+}
+// se pueden seguir anidando catch
+finally
+{
+    Debug.WriteLine("Código de Error Finalizado");
+}
+```
+El bloque `try` permite ejecutar un código que puede generar una excepción. Si ocurre una excepción, el control se transfiere al bloque `catch` correspondiente. El bloque `finally` se ejecuta siempre, independientemente de si se lanzó una excepción o no, y se utiliza para liberar recursos o realizar tareas de limpieza.
+
+#### Hilos
+Los hilos (threads) permiten la ejecución concurrente de múltiples tareas dentro de una aplicación. En .NET nanoframework, la clase `Thread` proporciona métodos y propiedades para crear y manejar hilos.
+
+Ejemplo de uso de un hilo en .NET nanoframework:
+
+```csharp
+using System;
+using System.Threading;
+
+namespace NFApp1
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            Thread hilo = new Thread(new ThreadStart(EjecutarHilo));
+            hilo.Start();
+            Debug.WriteLine("Hilo principal continúa ejecutándose.");
+        }
+
+        public static void EjecutarHilo()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Debug.WriteLine("Hilo secundario ejecutándose: " + i);
+                Thread.Sleep(1000); // Pausa el hilo por 1 segundo
+            }
+        }
+    }
+}
+```
+
+En este ejemplo, se crea un hilo secundario que ejecuta el método `EjecutarHilo`. El hilo principal continúa ejecutándose mientras el hilo secundario realiza su tarea de forma concurrente.
+
+### GPio
+
+#### IO PORTS
+
+Los puertos de entrada/salida (IO Ports) son interfaces que permiten la comunicación entre el microcontrolador y otros dispositivos periféricos. Estos puertos pueden configurarse como entradas o salidas para leer datos de sensores o enviar señales a actuadores.
+
+Ejemplo de uso de un puerto IO en .NET nanoframework:
+
+```csharp
+using System;
+using System.Device.Gpio;
+using System.Threading;
+
+namespace NFApp1
+{
+    public class Program
+    {
+        static GpioPin led;
+        public static void Main()
+        {
+            
+            GpioController gpioController = new GpioController();
+            led = gpioControler.OpenPin(2, PinMode.Output); // Pin 2
+            while (true)
+            {
+                gpio.Write(led, PinValue.High); // Enciende el pin
+                Thread.Sleep(1000); // Espera 1 segundo
+                gpio.Write(led, PinValue.Low); // Apaga el pin
+                Thread.Sleep(1000); // Espera 1 segundo
+            }
+        }
+    }
+}
+```
+
+<details>
+<summary>Digital</summary>
+
+### Puertos Digitales
+
+Los puertos digitales permiten la comunicación entre el microcontrolador y otros dispositivos electrónicos mediante señales digitales. En .NET nanoframework, se pueden configurar los pines como entradas o salidas para leer o escribir valores digitales.
+
+#### Escritura Digital
+
+Para escribir un valor digital en un pin, se configura el pin como salida y se utiliza el método `Write` para establecer el valor del pin (alto o bajo).
+
+Ejemplo de escritura digital:
+
+```csharp
+using System;
+using System.Device.Gpio;
+using System.Threading;
+
+namespace NFApp1
+{
+    public class Program
+    {
+        static GpioPin led;
+        public static void Main()
+        {
+            GpioController gpioController = new GpioController();
+            led = gpioController.OpenPin(2, PinMode.Output); // Configura el pin 2 como salida
+            while (true)
+            {
+                gpioController.Write(led, PinValue.High); // Enciende el pin
+                Thread.Sleep(1000); // Espera 1 segundo
+                gpioController.Write(led, PinValue.Low); // Apaga el pin
+                Thread.Sleep(1000); // Espera 1 segundo
+            }
+        }
+    }
+}
+```
+
+#### Lectura Digital
+
+Para leer un valor digital de un pin, se configura el pin como entrada y se utiliza el método `Read` para obtener el valor del pin (alto o bajo).
+
+Ejemplo de lectura digital:
+
+```csharp
+using System;
+using System.Device.Gpio;
+using System.Threading;
+
+namespace NFApp1
+{
+    public class Program
+    {
+        static GpioPin button;
+        public static void Main()
+        {
+            GpioController gpioController = new GpioController();
+            button = gpioController.OpenPin(3, PinMode.Input); // Configura el pin 3 como entrada
+            while (true)
+            {
+                PinValue value = gpioController.Read(button); // Lee el valor del pin
+                if (value == PinValue.High)
+                {
+                    Debug.WriteLine("Botón presionado");
+                }
+                else
+                {
+                    Debug.WriteLine("Botón no presionado");
+                }
+                Thread.Sleep(500); // Espera 0.5 segundos
+            }
+        }
+    }
+}
+```
+
 </details>
 
 <details>
-<summary> IO PORTS </summary>
-Para usar los puertos de la tarjeta ESP32 con nanoff, se pueden utilizar las siguientes funciones básicas:
+<summary>Análogo</summary>
 
-#### Gpio
-[GPIO (Introducción/Salida de Propósito General) explicado](https://docs.nanoframework.net/content/getting-started-guides/gpio-explained.html)
+### Puertos Analógicos
 
-```csharp
-using System.Device.Gpio;
-// connection
-GpioController gpio = new GpioController();
-gpio.OpenPin(25, PinMode.Output);
-gpio.Write(25, PinValue.High);
-// blink
-GpioController gpio = new GpioController();
-GpioPin = led = gpio.OpenPin(25, PinMode.Output);
-led.Write(PinValue.High);
-GpioController gpio = new GpioController();
-GpioPin = led = gpio.OpenPin(25, PinMode.Output);
-led.Write(PinValue.Low);
+Los puertos analógicos permiten la lectura de señales analógicas, que son señales continuas que pueden tener un rango de valores. En .NET nanoframework, se pueden utilizar los puertos analógicos para leer valores de sensores analógicos, como sensores de temperatura, luz, etc.
 
-```
+#### Lectura Analógica
 
-#### ADC
-[ADC (Analog-to-Digital Converter) explained](https://docs.nanoframework.net/content/getting-started-guides/adc-explained.html)
+Para leer un valor analógico de un pin, se configura el pin como entrada analógica y se utiliza el método `Read` para obtener el valor del pin.
+
+Ejemplo de lectura analógica:
 
 ```csharp
+using System;
 using System.Device.Adc;
-// connection
-AdcController adc = new AdcController();
-AdcChannel channel = adc.OpenChannel(0);
-int value = channel.ReadValue();
-// measure
-AdcController adc = new AdcController();
-int max1 = adc.MaxValue;
-int min1 = adc.MinValue;
-Console.WriteLine("min1=" + min1.ToString() + " max1=" + max1.ToString());
-AdcChannel ac0 = adc.OpenChannel(0);
-int value = ac0.ReadValue();
-double percent = ac0.ReadRatio();
-Console.WriteLine("value0=" + value.ToString() + " ratio=" + percent.ToString());
-```
+using System.Threading;
 
-#### DAC
-[DAC (Digital-to-Analog Converter) explained](https://docs.nanoframework.net/content/getting-started-guides/dac-explained.html)
-
-```csharp
-DacController dac = DacController.GetDefault();
-// open channel 0
-DacChannel dacChannel = dac.OpenChannel(0);
-// get DAC resolution
-dacResolution = dac.ResolutionInBits;
-int timeResolution = 5;
-int value = 0;
-int upperValue;
-int periodCounter = 0;
-int halfPeriod;
-// get upper value from DAC resolution
-upperValue = (int)Math.Pow(2.0, dacResolution);
-// figure out an expedite way to get a more or less square wave from the DAC and time resolution
-halfPeriod = ( upperValue / (timeResolution * 10) ) / 2;
-while(true)
+namespace NFApp1
 {
-    if (periodCounter == halfPeriod)
+    public class Program
     {
-        // tweak the value so it doesn't overflow the DAC
-        value = upperValue - 1;
+        static AdcChannel sensor;
+        public static void Main()
+        {
+            AdcController adcController = new AdcController();
+            sensor = adcController.OpenChannel(0); // Configura el canal 0 como entrada analógica
+            while (true)
+            {
+                int value = sensor.ReadValue(); // Lee el valor analógico del pin
+                Debug.WriteLine("Valor del sensor: " + value);
+                Thread.Sleep(1000); // Espera 1 segundo
+            }
+        }
     }
-    else if (periodCounter == halfPeriod * 2)
-    {
-        value = 0;
-
-        periodCounter = 0;
-    }
-    channel.WriteValue((ushort)value);
-    //Output the current value to console when in debug.
-    Debug.WriteLine($"DAC SquareWave output current value: {value}");
-    Thread.Sleep(timeResolution);
-    periodCounter++;
 }
 ```
 
-#### PWM
-[All you've always wanted to know about PWM](https://docs.nanoframework.net/content/getting-started-guides/pwm-explained.html)
+En este ejemplo, se configura un canal ADC (Analog-to-Digital Converter) para leer valores analógicos de un sensor conectado al pin correspondiente. El valor leído se muestra en la consola de depuración.
+
+</details>
+
+<details>
+<summary>i2c</summary>
+
+### I2C
+
+El protocolo I2C (Inter-Integrated Circuit) es un protocolo de comunicación en serie que permite la comunicación entre múltiples dispositivos conectados a un mismo bus. En .NET nanoframework, se puede utilizar la clase `I2cDevice` para interactuar con dispositivos I2C.
+
+#### Configuración y Uso de I2C
+
+Para utilizar I2C en .NET nanoframework, primero se debe configurar el dispositivo I2C especificando la dirección del dispositivo y otros parámetros de configuración.
+
+Ejemplo de uso de I2C:
 
 ```csharp
-using System.Device.Pwm;
-// connection
-PwmChannel pwm = PwmChannel.Create(0, 0, 1000, 0.5);
-pwm.Start();
-// prove
-PwmChannel pwmPin = PwmChannel.CreateFromPin(18, 40000, 0.3);
-pwmPin.Start();
-// Do something here
-// You can even adjust the duty cycle
-pwmPin.DutyCycle = 0.5
-// And at the end, you can stop it
-pwmPin.Stop();
-// Define LED PWM channel 1 GPIO 16
-Configuration.SetPinFunction(16, DeviceFunction.PWM1);
-```
+using System;
+using System.Device.I2c;
+using System.Threading;
 
-#### UART
-[UART (Universal Asynchronous Receiver/Transmitter) or Serial Port Communication](https://docs.nanoframework.net/content/getting-started-guides/uart-explained.html)
-
-```csharp
-using System.IO.Ports;
-SerialPort uart = new SerialPort("COM1", 9600);
-uart.Open();
-uart.WriteLine("Hello ESP32");
-
-using System.IO.Ports;
-// open COM2
-var serialPort = new SerialPort("COM2");
-// set parameters
-serialPort.BaudRate = 9600;
-serialPort.Parity = Parity.None;
-serialPort.StopBits = StopBits.One;
-serialPort.Handshake = Handshake.None;
-serialPort.DataBits = 8;
-// Additional properties can be adjusted like the timeout, here 4 seconds = 4000 milliseconds
-serialPort.ReadTimeout = 4000;
-// Open the Serial Port!
-serialPort.Open();
-// Write string data
-serialPort.WriteLine(DateTime.UtcNow + " hello from nanoFramework!");
-// Read some data
-byte[] buffer = new byte[5];
-var bytesRead = serialPort.Read(buffer, 0, buffer.Length);
-// Convert those data as a string
-if (bytesRead > 0)
+namespace NFApp1
 {
-    String temp = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-    Debug.WriteLine("String: >>" + temp + "<< ");
+    public class Program
+    {
+        public static void Main()
+        {
+            // Configuración del dispositivo I2C
+            var settings = new I2cConnectionSettings(1, 0x40); // Bus I2C 1, dirección del dispositivo 0x40
+            var device = I2cDevice.Create(settings);
+
+            // Escribir datos al dispositivo I2C
+            byte[] writeBuffer = new byte[] { 0x00, 0x01 };
+            device.Write(writeBuffer);
+
+            // Leer datos del dispositivo I2C
+            byte[] readBuffer = new byte[2];
+            device.Read(readBuffer);
+
+            // Mostrar los datos leídos
+            Debug.WriteLine("Datos leídos: " + BitConverter.ToString(readBuffer));
+
+            Thread.Sleep(Timeout.Infinite);
+        }
+    }
 }
 ```
 
-#### I2C
-[I2C (Inter-Integrated Circuit) communication explained](https://docs.nanoframework.net/content/getting-started-guides/i2c-explained.html)
-
-```csharp
-using System.Device.I2c;
-I2cConnectionSettings settings = new I2cConnectionSettings(1, 0x40);
-I2cDevice device = I2cDevice.Create(settings);
-byte[] writeBuffer = new byte[] { 0x00, 0x01 };
-device.Write(writeBuffer);
-
-using System.Device.I2c;
-I2cDevice i2c = new(new I2cConnectionSettings(1, 0x42));
-// Example of writing a byte
-var res = i2c.WriteByte(0x07);
-// Example of reading 5 bytes
-SpanByte span = new byte[5];
-res = i2c.Read(span);
-// res does contain the status.
-Console.Write($"0x42 read status: {res.Status}, number of bytes transferred: {res.BytesTransferred}");
-// Success is when res.STatus is equal to I2cTransferStatus.FullTransfer
-// Redefine I2C2 data pin (SDA) from GPIO 25 (default) to GPIO 17
-Configuration.SetPinFunction(17, DeviceFunction.I2C2_DATA);
-```
-
-#### SPI
-[SPI (Serial Peripheral Interface) explained](https://docs.nanoframework.net/content/getting-started-guides/spi-explained.html)
-
-```csharp
-using System.Device.Spi;
-SpiConnectionSettings settings = new SpiConnectionSettings(1, 0);
-SpiDevice device = SpiDevice.Create(settings);
-byte[] writeBuffer = new byte[] { 0x00, 0x01 };
-device.Write(writeBuffer);
-
-using System.Device.Spi;
-
-SpiDevice spiDevice;
-SpiConnectionSettings connectionSettings;
-
-// Note: the ChipSelect pin should be adjusted to your device, here 12
-connectionSettings = new SpiConnectionSettings(1, 12);
-// You can adjust other settings as well in the connection
-connectionSettings.ClockFrequency = 1_000_000;
-connectionSettings.DataBitLength = 8;
-connectionSettings.DataFlow = DataFlow.LsbFirst;
-connectionSettings.Mode = SpiMode.Mode2;
-
-// Then you create your SPI device by passing your settings
-spiDevice = SpiDevice.Create(connectionSettings);
-
-// You can write a SpanByte
-SpanByte writeBufferSpanByte = new byte[2] { 42, 84 };
-spiDevice.Write(writeBufferSpanByte);
-
-// The read operations are similar
-SpanByte readBufferSpanByte = new byte[2];
-// This will read 2 bytes
-spiDevice.Read(readBufferSpanByte);
-// Define MOSI pin for SPI2 as GPIO 15
-Configuration.SetPinFunction(15, DeviceFunction.SPI2_MOSI);
-```
-</details>
+En este ejemplo, se configura un dispositivo I2C con una dirección específica y se realizan operaciones de escritura y lectura. Los datos leídos se muestran en la consola de depuración.
 
 </details>
 
-#### Entregables
+<details>
+<summary>spi</summary>
+
+### SPI
+
+El protocolo SPI (Serial Peripheral Interface) es un protocolo de comunicación en serie que permite la comunicación rápida entre un microcontrolador y uno o más dispositivos periféricos. En .NET nanoframework, se puede utilizar la clase `SpiDevice` para interactuar con dispositivos SPI.
+
+#### Configuración y Uso de SPI
+
+Para utilizar SPI en .NET nanoframework, primero se debe configurar el dispositivo SPI especificando los parámetros de configuración como el bus SPI, la frecuencia de reloj, el modo SPI y otros.
+
+Ejemplo de uso de SPI:
+
+```csharp
+using System;
+using System.Device.Spi;
+using System.Threading;
+
+namespace NFApp1
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            // Configuración del dispositivo SPI
+            var settings = new SpiConnectionSettings(1, 0) // Bus SPI 1, Chip Select 0
+            {
+                ClockFrequency = 500000, // Frecuencia de reloj de 500 kHz
+                Mode = SpiMode.Mode0 // Modo SPI 0
+            };
+            var device = SpiDevice.Create(settings);
+
+            // Escribir datos al dispositivo SPI
+            byte[] writeBuffer = new byte[] { 0x01, 0x02, 0x03 };
+            device.Write(writeBuffer);
+
+            // Leer datos del dispositivo SPI
+            byte[] readBuffer = new byte[3];
+            device.Read(readBuffer);
+
+            // Mostrar los datos leídos
+            Debug.WriteLine("Datos leídos: " + BitConverter.ToString(readBuffer));
+
+            Thread.Sleep(Timeout.Infinite);
+        }
+    }
+}
+```
+
+En este ejemplo, se configura un dispositivo SPI con una frecuencia de reloj específica y un modo SPI. Se realizan operaciones de escritura y lectura, y los datos leídos se muestran en la consola de depuración.
+
+</details>
+
+<details>
+<summary>uart</summary>
+
+### UART
+
+El protocolo UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación en serie que permite la transmisión y recepción de datos entre dispositivos. En .NET nanoframework, se puede utilizar la clase `SerialPort` para interactuar con dispositivos UART.
+
+#### Configuración y Uso de UART
+
+Para utilizar UART en .NET nanoframework, primero se debe configurar el puerto serie especificando los parámetros de configuración como la velocidad en baudios, los bits de datos, los bits de parada y la paridad.
+
+Ejemplo de uso de UART:
+
+```csharp
+using System;
+using System.IO.Ports;
+using System.Text;
+using System.Threading;
+
+namespace NFApp1
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            // Configuración del puerto serie
+            SerialPort serialPort = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
+            serialPort.Open();
+
+            // Enviar datos al dispositivo UART
+            string message = "Hola desde nanoFramework!";
+            byte[] buffer = Encoding.UTF8.GetBytes(message);
+            serialPort.Write(buffer, 0, buffer.Length);
+
+            // Leer datos del dispositivo UART
+            byte[] readBuffer = new byte[serialPort.BytesToRead];
+            serialPort.Read(readBuffer, 0, readBuffer.Length);
+            string receivedMessage = Encoding.UTF8.GetString(readBuffer);
+            Debug.WriteLine("Mensaje recibido: " + receivedMessage);
+
+            serialPort.Close();
+            Thread.Sleep(Timeout.Infinite);
+        }
+    }
+}
+```
+
+En este ejemplo, se configura un puerto serie con una velocidad en baudios de 9600 y se realizan operaciones de escritura y lectura. Los datos leídos se muestran en la consola de depuración.
+
+</details>
+
+## lvgl
+
+[LVGL](https://lvgl.io/) es una herramienta muy utilizada para mostrar widgets en pantallas de sistemas embebidos.
+Para generar ya los archivos de los widgets existe [Porject-lvgl](https://lvgl.io/tools/project-creator), [SquareLine Studio](https://squareline.io/)
+El uso de lvgl, existe para diferentes tipos de lenguajes o frameworks que se usan en los sistemas embebidos
+
+#### Entregable
 
 
 # DESARROLLO
+
+## Placa
+
+Se usa una placa ESP32-S3-lcd-1.69" como se ve en la imagen.
+<p align="center">
+    <img src="./Imagenes/ESP32-S3-lcd-1.69.jpg" alt="ESP32-S3-lcd-1.69" width="500" height="300">
+</p>
+
+## Código
+
+### Conexión 
+
+### Datos
+
