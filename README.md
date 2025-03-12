@@ -29,12 +29,11 @@
         - [Datos](#datos)
 
 ## .NET nanoframework
-
 Todo lo que sigue viene de **[.NET nanoframework](https://github.com/nanoframework)**.
+Ejemplos de código para uso estan en [samples](https://github.com/nanoframework/Samples).
 
 ### Firmware
 Para descargar e implementar nanoframework en el sistema embebido que deseamos, se debe primero instalar [vscode](https://code.visualstudio.com/) o [vscode community](https://visualstudio.microsoft.com/es/vs/community/).
-
 Se requiere descargar estos IDE y en sus extensiones descargar .NET nanoframework.
 <details>
 <summary>step to step</summary>
@@ -75,13 +74,11 @@ Si no se sabe que tarjeta es:
 > nanoff --platform esp32 --serialport COMX --update
 
 Con ello ya hecho, se utiliza en esto [vscode_com](https://visualstudio.microsoft.com/es/vs/community/) y se crea un proyecto vacio en nanoframework y se siguen los pasos:
-
 1. Ver > Otras ventanas > Device Explorer
 2. Click en la lupa y buscara el dispositivo con la salida del terminal en nanoframework se puede ver el proceso de doble verificación
 3. Ahora darle click al dispositivo en el COMX
 4. Click Device Capabilities
 5. Verificar versión mscorlib con el de nuget de referencias
-
 Por último se cargan los programas y se ven en salida/depurar.
 </details>
 
@@ -126,10 +123,8 @@ namespace NFApp1
        }
    }
 }
-
 ```
 El siguiente código es una representación de una función de nanoff. El sistema se demoro cerca de 6.2 ms.
-
 ```csharp
 using System;
 using System.Threading;
@@ -167,13 +162,11 @@ namespace NFApp1
 ### INSTANCIA FUNCIONES NANOFF
 Para el nanoff es importante aclarar como se instancia o se generan variables y unidades de memoria como atributos y funciones de la misma.
 
-
 #### Debug
 Función que permite usar la consola del mismo dispositivo embebido que tiene diversos metodos que permite usar diferentes funcionalidades del sistema.
 
 ##### WriteLine
 Permite escribir lo que se necesita en la salida del depuración del sistema.
-
 ```csharp
 Debug.WriteLine("Mensaje de depuración");
 ```
@@ -185,7 +178,6 @@ Crear hilos independientes como las tareas.
 ##### Sleep
 El método `Sleep` detiene la ejecución del subproceso actual durante un período de tiempo especificado.
 Ejemplo de uso:
-
 ```csharp
 Thread.Sleep(1000); // Detiene el subproceso durante 1000 milisegundos (1 segundo)
 ```
@@ -193,7 +185,6 @@ Este método es útil para pausar la ejecución de un subproceso sin bloquear ot
 
 #### try
 Forma de evitar y controlar los errores, pero con la funcionalidad de evitarlos y continuar con el proceso.
-
 ```csharp
 try
 {
@@ -219,9 +210,7 @@ El bloque `try` permite ejecutar un código que puede generar una excepción. Si
 
 #### Hilos
 Los hilos (threads) permiten la ejecución concurrente de múltiples tareas dentro de una aplicación. En .NET nanoframework, la clase `Thread` proporciona métodos y propiedades para crear y manejar hilos.
-
 Ejemplo de uso de un hilo en .NET nanoframework:
-
 ```csharp
 using System;
 using System.Threading;
@@ -248,17 +237,12 @@ namespace NFApp1
     }
 }
 ```
-
 En este ejemplo, se crea un hilo secundario que ejecuta el método `EjecutarHilo`. El hilo principal continúa ejecutándose mientras el hilo secundario realiza su tarea de forma concurrente.
 
 ### GPio
-
 #### IO PORTS
-
 Los puertos de entrada/salida (IO Ports) son interfaces que permiten la comunicación entre el microcontrolador y otros dispositivos periféricos. Estos puertos pueden configurarse como entradas o salidas para leer datos de sensores o enviar señales a actuadores.
-
 Ejemplo de uso de un puerto IO en .NET nanoframework:
-
 ```csharp
 using System;
 using System.Device.Gpio;
@@ -290,15 +274,11 @@ namespace NFApp1
 <summary>Digital</summary>
 
 ### Puertos Digitales
-
 Los puertos digitales permiten la comunicación entre el microcontrolador y otros dispositivos electrónicos mediante señales digitales. En .NET nanoframework, se pueden configurar los pines como entradas o salidas para leer o escribir valores digitales.
 
 #### Escritura Digital
-
 Para escribir un valor digital en un pin, se configura el pin como salida y se utiliza el método `Write` para establecer el valor del pin (alto o bajo).
-
 Ejemplo de escritura digital:
-
 ```csharp
 using System;
 using System.Device.Gpio;
@@ -324,13 +304,9 @@ namespace NFApp1
     }
 }
 ```
-
 #### Lectura Digital
-
 Para leer un valor digital de un pin, se configura el pin como entrada y se utiliza el método `Read` para obtener el valor del pin (alto o bajo).
-
 Ejemplo de lectura digital:
-
 ```csharp
 using System;
 using System.Device.Gpio;
@@ -362,22 +338,17 @@ namespace NFApp1
     }
 }
 ```
-
 </details>
 
 <details>
 <summary>Análogo</summary>
 
 ### Puertos Analógicos
-
 Los puertos analógicos permiten la lectura de señales analógicas, que son señales continuas que pueden tener un rango de valores. En .NET nanoframework, se pueden utilizar los puertos analógicos para leer valores de sensores analógicos, como sensores de temperatura, luz, etc.
 
 #### Lectura Analógica
-
 Para leer un valor analógico de un pin, se configura el pin como entrada analógica y se utiliza el método `Read` para obtener el valor del pin.
-
 Ejemplo de lectura analógica:
-
 ```csharp
 using System;
 using System.Device.Adc;
@@ -404,22 +375,17 @@ namespace NFApp1
 ```
 
 En este ejemplo, se configura un canal ADC (Analog-to-Digital Converter) para leer valores analógicos de un sensor conectado al pin correspondiente. El valor leído se muestra en la consola de depuración.
-
 </details>
 
 <details>
 <summary>i2c</summary>
 
 ### I2C
-
 El protocolo I2C (Inter-Integrated Circuit) es un protocolo de comunicación en serie que permite la comunicación entre múltiples dispositivos conectados a un mismo bus. En .NET nanoframework, se puede utilizar la clase `I2cDevice` para interactuar con dispositivos I2C.
 
 #### Configuración y Uso de I2C
-
 Para utilizar I2C en .NET nanoframework, primero se debe configurar el dispositivo I2C especificando la dirección del dispositivo y otros parámetros de configuración.
-
 Ejemplo de uso de I2C:
-
 ```csharp
 using System;
 using System.Device.I2c;
@@ -451,24 +417,18 @@ namespace NFApp1
     }
 }
 ```
-
 En este ejemplo, se configura un dispositivo I2C con una dirección específica y se realizan operaciones de escritura y lectura. Los datos leídos se muestran en la consola de depuración.
-
 </details>
 
 <details>
 <summary>spi</summary>
 
 ### SPI
-
 El protocolo SPI (Serial Peripheral Interface) es un protocolo de comunicación en serie que permite la comunicación rápida entre un microcontrolador y uno o más dispositivos periféricos. En .NET nanoframework, se puede utilizar la clase `SpiDevice` para interactuar con dispositivos SPI.
 
 #### Configuración y Uso de SPI
-
 Para utilizar SPI en .NET nanoframework, primero se debe configurar el dispositivo SPI especificando los parámetros de configuración como el bus SPI, la frecuencia de reloj, el modo SPI y otros.
-
 Ejemplo de uso de SPI:
-
 ```csharp
 using System;
 using System.Device.Spi;
@@ -504,24 +464,18 @@ namespace NFApp1
     }
 }
 ```
-
 En este ejemplo, se configura un dispositivo SPI con una frecuencia de reloj específica y un modo SPI. Se realizan operaciones de escritura y lectura, y los datos leídos se muestran en la consola de depuración.
-
 </details>
 
 <details>
 <summary>uart</summary>
 
 ### UART
-
 El protocolo UART (Universal Asynchronous Receiver-Transmitter) es un protocolo de comunicación en serie que permite la transmisión y recepción de datos entre dispositivos. En .NET nanoframework, se puede utilizar la clase `SerialPort` para interactuar con dispositivos UART.
 
 #### Configuración y Uso de UART
-
 Para utilizar UART en .NET nanoframework, primero se debe configurar el puerto serie especificando los parámetros de configuración como la velocidad en baudios, los bits de datos, los bits de parada y la paridad.
-
 Ejemplo de uso de UART:
-
 ```csharp
 using System;
 using System.IO.Ports;
@@ -555,19 +509,59 @@ namespace NFApp1
     }
 }
 ```
-
 En este ejemplo, se configura un puerto serie con una velocidad en baudios de 9600 y se realizan operaciones de escritura y lectura. Los datos leídos se muestran en la consola de depuración.
+</details>
 
+<details>
+<summary>Wifi</summary>
+
+### Configuración y Uso de Wifi
+El ESP32 tiene capacidades integradas de Wifi que permiten la conexión a redes inalámbricas. En .NET nanoframework, se puede utilizar la clase `WiFiNetworkHelper` para conectarse a una red Wifi.
+
+#### Conexión a una Red Wifi
+Para conectarse a una red Wifi, se debe especificar el SSID y la contraseña de la red.
+Ejemplo de conexión a una red Wifi:
+```csharp
+using System;
+using System.Threading;
+using nanoFramework.Networking;
+
+namespace NFApp1
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            // Configuración de la red Wifi
+            string ssid = "TuSSID";
+            string password = "TuContraseña";
+
+            // Conectar a la red Wifi
+            var success = WiFiNetworkHelper.ConnectDhcp(ssid, password, requiresDateTime: true, token: new CancellationTokenSource(60000).Token);
+
+            if (success)
+            {
+                Debug.WriteLine("Conectado a la red Wifi.");
+            }
+            else
+            {
+                Debug.WriteLine("Error al conectar a la red Wifi.");
+            }
+
+            Thread.Sleep(Timeout.Infinite);
+        }
+    }
+}
+```
+En este ejemplo, se configura la red Wifi con el SSID y la contraseña, y se intenta conectar a la red. Si la conexión es exitosa, se muestra un mensaje en la consola de depuración.
 </details>
 
 ## lvgl
-
 [LVGL](https://lvgl.io/) es una herramienta muy utilizada para mostrar widgets en pantallas de sistemas embebidos.
-Para generar ya los archivos de los widgets existe [Porject-lvgl](https://lvgl.io/tools/project-creator), [SquareLine Studio](https://squareline.io/)
+Para generar ya los archivos de los widgets existe [Project-lvgl](https://lvgl.io/tools/project-creator), [SquareLine Studio](https://squareline.io/)
 El uso de lvgl, existe para diferentes tipos de lenguajes o frameworks que se usan en los sistemas embebidos
 
 #### Entregable
-
 
 # DESARROLLO
 
